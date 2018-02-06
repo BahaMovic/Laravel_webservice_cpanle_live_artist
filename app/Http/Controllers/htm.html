@@ -1,0 +1,82 @@
+<div class="form-cols clearfix">
+                                              <div class="form-col-4 form-col-1of4">
+                                                <div class="form-controls">
+                                                    
+                                                       <select name="specialty_id" id="categoryID">
+														<option value="" selected="selected"> First select Section  ....</option>
+														  @foreach($spec as $sp)
+															<option value="{{$sp->id}}">{{$sp->title}}</option>
+
+														  @endforeach
+														</select>
+														{{ csrf_field() }}
+														<script type="text/javascript">
+															$("#categoryID").change(function()
+															{
+																var _token = $('input[name="_token"]').val();
+																var val = $(this).val();
+																 $.ajax({
+													                      type: 'post',
+													                      url: "{{url('/getDoctores')}}",
+													                      data:"id="+val+"&_token={{csrf_token()}}",
+													                      success: function( data ){
+													                               $("#doctors_list2").html("");
+													                                $("#doctors_list2").append(data);
+													                               // alert(data);
+													                            }
+													                      
+													                  });
+																
+															});
+														</script>
+
+                                                
+                                                </div>
+                                             </div>
+                                             <div class="form-col-4 form-col-1of4">
+                                                <div class="form-controls">
+                                                    <div id="dd" class="wrapper-dropdown-1 select-one" tabindex="1">
+                                                      <select name="doctor_id" id="doctors_list2">
+                                                          
+                                                        <option>Choose the doctor... </option>
+                                                      </select>
+                                                      <script type="text/javascript">
+															$("#doctors_list2").change(function()
+															{
+																
+																var val2 = $(this).val();
+																 $.ajax({
+													                      type: 'post',
+													                      url: "{{url('/getDays')}}",
+													                      data:"id="+val2+"&_token={{csrf_token()}}",
+													                      success: function( data ){
+													                               $("#times_list").html("");
+													                                $("#times_list").append(data);
+													                               // alert(data);
+													                            }
+													                      
+													                  });
+																
+															});
+														</script>
+                                                      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+                                                      <script type="text/javascript">
+                                                      	 $(".depart").click(function(){
+                                                      	 	alert("clicked");
+                                                      	 });
+                                                      </script>
+                                                    </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-col-4 form-col-1of4">
+                                                <div class="form-controls">
+                                                    <div id="dd" class="wrapper-dropdown-1 select-one" tabindex="1">
+                                                        <select name="time" id="times_list" required="">
+                                                          <option>Choose the appointment... </option>
+                                                      </select>
+
+                                                    </div>
+                                                </div>
+                                             </div>
+
